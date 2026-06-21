@@ -50,9 +50,7 @@ const els = {
   tooltip: document.getElementById("tooltip"),
   empty: document.getElementById("emptyState"),
   list: document.getElementById("seriesList"),
-  snapshot: document.getElementById("snapshotList"),
   status: document.getElementById("statusText"),
-  pointCount: document.getElementById("pointCount"),
   chartTitle: document.getElementById("chartTitle"),
   chartSubtitle: document.getElementById("chartSubtitle"),
   hoverDate: document.getElementById("hoverDate"),
@@ -488,15 +486,14 @@ function renderChart() {
   if (!domain) {
     els.empty.textContent = state.series.some((item) => item.error) ? "没有可绘制的数据" : "暂无数据";
     els.empty.classList.remove("hidden");
-    renderSnapshot();
+    renderHoverDate();
     return;
   }
   els.empty.classList.add("hidden");
   drawAxes(domain, box);
   drawSeries(domain, box);
   drawHover(domain, box);
-  renderSnapshot();
-  els.pointCount.textContent = `${getAllDisplayPoints().length} 点`;
+  renderHoverDate();
 }
 
 function renderLists() {
@@ -519,7 +516,7 @@ function renderLists() {
     `;
     els.list.appendChild(row);
   });
-  renderSnapshot();
+  renderHoverDate();
 }
 
 function loadedSeries() {
@@ -839,26 +836,12 @@ function getHoverRows(index) {
     .filter(Boolean);
 }
 
-function renderSnapshot() {
+function renderHoverDate() {
   const domain = getDomain();
   const fallbackIndex = domain ? Math.max(...state.series.map((item) => item.display.length - 1).filter((value) => value >= 0)) : null;
   const index = state.hoverIndex ?? fallbackIndex;
   const rows = Number.isFinite(index) ? getHoverRows(index) : [];
-  els.snapshot.innerHTML = "";
   els.hoverDate.textContent = rows[0] ? formatDate(rows[0].point.time) : "-";
-  rows.forEach(({ item, point }) => {
-    const row = document.createElement("div");
-    row.className = "snapshot-row";
-    row.innerHTML = `
-      <span class="swatch" style="background:${item.color}"></span>
-      <div>
-        <div class="symbol-name">${escapeHtml(displaySymbol(item.symbol))}</div>
-        <div class="snapshot-meta">${escapeHtml(symbolMeta(item.symbol, formatValue(point.raw, "price")))}</div>
-      </div>
-      <div class="series-change ${valueClass(point.value)}">${formatValue(point.value)}</div>
-    `;
-    els.snapshot.appendChild(row);
-  });
 }
 
 function renderTooltip(clientX, clientY) {
