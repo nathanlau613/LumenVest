@@ -362,6 +362,21 @@ async function serveStatic(req, res, url) {
     return;
   }
 
+  if (rawPath === "/index.html") {
+    let html = await readFile(filePath, "utf8");
+    const css = await readFile(join(root, "styles.css"), "utf8");
+    const js = await readFile(join(root, "app.js"), "utf8");
+    html = html
+      .replace('<link rel="stylesheet" href="./styles.css">', () => `<style>\n${css}\n</style>`)
+      .replace('<script src="./app.js"></script>', () => `<script>\n${js.replaceAll("</script", "<\\/script")}\n</script>`);
+    res.writeHead(200, {
+      "content-type": "text/html; charset=utf-8",
+      "cache-control": "no-store",
+    });
+    res.end(html);
+    return;
+  }
+
   const data = await readFile(filePath);
   const type = mimeTypes[extname(filePath)] || "application/octet-stream";
   res.writeHead(200, {
