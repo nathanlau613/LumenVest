@@ -1,0 +1,21 @@
+{
+  "id": "v0001_中文字体优化恢复版",
+  "number": "v0001",
+  "name": "中文字体优化恢复版",
+  "note": "正式版本仅记录主观优化；维护修复合并入当前基线，不单独占版本号。",
+  "createdAt": "2026-06-20T08:42:38.112Z",
+  "files": [
+    "index.html",
+    "styles.css",
+    "app.js",
+    "server.mjs",
+    "README.md"
+  ],
+  "hashes": {
+    "index.html": "6ee5a57f34a5c5787d82430797434dbdf7d0d01e9355a0dfce0fb6a62d857af6",
+    "styles.css": "0609c29d8343af1ed48c03945f6084a04c0d7f1c998b16f02df22cef45d220d0",
+    "app.js": "5ebc6ed9e1e33db3927cb36f0304441266c0e5d93b199c028bc58b73c38fcfbc",
+    "server.mjs": "c9e314a06edf8e1b639d711d46395d248ade6d7f40d07c27d3b9edd0c41d4fae",
+    "README.md": "01096e614ad5b5f65acc1db4f972653f90f5d56b74e61e5f6127f43094b4a381"
+  }
+}

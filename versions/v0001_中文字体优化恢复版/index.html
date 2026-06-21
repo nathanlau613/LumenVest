@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>同步走势</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-frame">
+      <aside class="sidebar" aria-label="主导航">
+        <div class="sidebar-brand">
+          <span class="brand-mark">L</span>
+          <strong>LumenVest</strong>
+        </div>
+        <nav class="nav-list">
+          <a href="#dashboard" class="active">仪表盘</a>
+          <a href="#aiPanel">AI 预测</a>
+          <a href="#techPanel">技术分析</a>
+          <a href="#watchPanel">自选列表</a>
+          <a href="#portfolioPanel">投资组合</a>
+          <a href="#screenerPanel">筛选器</a>
+          <a href="#leaderboardPanel">AI 排行榜</a>
+          <a href="#reportPanel">报告</a>
+          <a href="#settingsPanel">设置</a>
+        </nav>
+        <div class="system-card">
+          <span></span>
+          <div>
+            <strong>系统运行正常</strong>
+            <small>版本 1.0.0</small>
+          </div>
+        </div>
+      </aside>
+
+      <main class="app-shell">
+      <div class="version-badge" aria-label="当前版本">v0001 · 中文字体优化恢复版</div>
+      <section class="toolbar" aria-label="控制列">
+        <div class="brand">
+          <span class="mark"></span>
+          <div>
+            <h1>多 AI 预测</h1>
+            <p id="sourceLine">比较走势、AI 模型观点和实时行情。</p>
+          </div>
+        </div>
+
+        <form id="symbolForm" class="symbol-form">
+          <div class="symbol-field">
+            <div class="symbol-field-head">
+              <span>标的</span>
+              <small id="symbolCount">0/8</small>
+            </div>
+            <div id="symbolComposer" class="symbol-composer">
+              <div id="symbolChips" class="symbol-chips"></div>
+              <input id="symbolInput" name="symbols" placeholder="代码/名称" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="symbol-tools">
+              <div class="quick-add" aria-label="常用标的">
+                <button type="button" data-symbol="^GSPC">S&P500</button>
+                <button type="button" data-symbol="^IXIC">Nasdaq</button>
+                <button type="button" data-symbol="^DJI">Dow</button>
+                <button type="button" data-symbol="TSLA">TSLA</button>
+              </div>
+              <button id="clearSymbols" class="clear-symbols" type="button">清空</button>
+            </div>
+          </div>
+          <button class="primary-button" type="submit">更新</button>
+        </form>
+
+        <div class="segmented" aria-label="周期">
+          <button type="button" data-range="5d" data-interval="15m">5D</button>
+          <button type="button" data-range="1mo" data-interval="1d">1M</button>
+          <button type="button" data-range="6mo" data-interval="1d">6M</button>
+          <button type="button" data-range="ytd" data-interval="1d">YTD</button>
+          <button type="button" data-range="1y" data-interval="1d" class="active">1Y</button>
+          <button type="button" data-range="5y" data-interval="1wk">5Y</button>
+        </div>
+
+        <div class="segmented" aria-label="显示方式">
+          <button type="button" data-mode="percent" class="active">%</button>
+          <button type="button" data-mode="price">价格</button>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="watchlist" aria-label="标的列表">
+          <div class="panel-title">
+            <span>列表</span>
+            <small id="statusText">待更新</small>
+          </div>
+          <div id="seriesList" class="series-list"></div>
+        </aside>
+
+        <section class="chart-panel" aria-label="同步走势图">
+          <div class="chart-head">
+            <div>
+              <h2 id="chartTitle">归一化走势</h2>
+              <p id="chartSubtitle">共同时间轴，起点为 0%</p>
+            </div>
+            <div id="hoverDate" class="hover-date">-</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chartCanvas"></canvas>
+            <div id="tooltip" class="tooltip" hidden></div>
+            <div id="emptyState" class="empty-state">正在读取数据</div>
+          </div>
+        </section>
+
+        <aside class="snapshot" aria-label="当前读数">
+          <div class="panel-title">
+            <span>读数</span>
+            <small id="pointCount">-</small>
+          </div>
+          <div id="snapshotList" class="snapshot-list"></div>
+        </aside>
+      </section>
+
+      <section class="feature-grid" aria-label="功能模块">
+        <article id="aiPanel" class="feature-panel wide">
+          <div class="panel-title">
+            <span>AI 预测</span>
+            <small id="aiModelSource">规则模型 · 基于当前行情</small>
+          </div>
+          <label class="select-row">
+            <span>预测标的</span>
+            <select id="aiSymbolSelect"></select>
+          </label>
+          <div id="aiSummary" class="ai-summary"></div>
+          <div id="aiModels" class="model-grid"></div>
+          <div class="inline-actions">
+            <button id="gptAnalyze" type="button">GPT 解读</button>
+            <small id="gptStatus">需要配置 OPENAI_API_KEY</small>
+          </div>
+          <div id="gptOutput" class="gpt-output">GPT 会只基于本页已计算的行情、技术指标、PE 和恐慌贪婪指数生成解读。</div>
+        </article>
+
+        <article id="techPanel" class="feature-panel">
+          <div class="panel-title">
+            <span>技术分析</span>
+            <small>均线 / RSI / 波动率 / PE</small>
+          </div>
+          <div id="fearGreedCard" class="ai-summary"></div>
+          <div id="techList" class="data-list"></div>
+        </article>
+
+        <article id="watchPanel" class="feature-panel">
+          <div class="panel-title">
+            <span>自选列表</span>
+            <small id="watchStatus">本地保存</small>
+          </div>
+          <div class="inline-actions">
+            <button id="saveWatchlist" type="button">保存当前标的</button>
+            <button id="loadWatchlist" type="button">载入自选</button>
+          </div>
+          <div id="watchSaved" class="data-list"></div>
+        </article>
+
+        <article id="portfolioPanel" class="feature-panel wide">
+          <div class="panel-title">
+            <span>投资组合</span>
+            <small>本地持仓估值</small>
+          </div>
+          <form id="holdingForm" class="holding-form">
+            <input id="holdingSymbol" placeholder="代码，如 0700">
+            <input id="holdingQty" type="number" min="0" step="0.01" placeholder="数量">
+            <input id="holdingCost" type="number" min="0" step="0.01" placeholder="成本价">
+            <button type="submit">加入</button>
+          </form>
+          <div id="portfolioList" class="data-list"></div>
+        </article>
+
+        <article id="screenerPanel" class="feature-panel">
+          <div class="panel-title">
+            <span>筛选器</span>
+            <small>当前标的池</small>
+          </div>
+          <label class="filter-row">
+            <span>最低涨跌幅</span>
+            <input id="minChangeFilter" type="number" value="-100" step="1">
+          </label>
+          <div id="screenerList" class="data-list"></div>
+        </article>
+
+        <article id="reportPanel" class="feature-panel">
+          <div class="panel-title">
+            <span>报告</span>
+            <small>可下载</small>
+          </div>
+          <button id="generateReport" class="panel-button" type="button">生成报告</button>
+          <textarea id="reportOutput" readonly></textarea>
+        </article>
+
+        <article id="leaderboardPanel" class="feature-panel">
+          <div class="panel-title">
+            <span>AI 排行榜</span>
+            <small>按模型分数排序</small>
+          </div>
+          <div id="leaderboardList" class="data-list"></div>
+        </article>
+
+        <article id="settingsPanel" class="feature-panel">
+          <div class="panel-title">
+            <span>设置</span>
+            <small>数据与状态</small>
+          </div>
+          <div id="settingsInfo" class="data-list"></div>
+        </article>
+      </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
