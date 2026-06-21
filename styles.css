@@ -227,7 +227,7 @@ button {
 .toolbar {
   min-height: 116px;
   display: grid;
-  grid-template-columns: minmax(190px, 260px) minmax(420px, 1fr) auto auto;
+  grid-template-columns: minmax(190px, 260px) minmax(420px, 1fr) auto;
   gap: 12px;
   align-items: center;
   padding: 12px;
@@ -708,12 +708,22 @@ h1 {
 
 .chart-panel {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
   padding: 14px;
   gap: 12px;
   background:
     linear-gradient(180deg, rgba(49, 95, 79, 0.07), transparent 38%),
     var(--panel);
+}
+
+.chart-range-bar {
+  display: flex;
+  justify-content: center;
+  padding-top: 2px;
+}
+
+.range-segmented {
+  width: min(520px, 100%);
 }
 
 .chart-head h2 {

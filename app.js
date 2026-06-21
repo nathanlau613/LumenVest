@@ -447,14 +447,23 @@ function drawSeries(domain, box) {
     ctx.strokeStyle = item.color;
     ctx.lineWidth = 2;
     ctx.beginPath();
+    let previous = null;
     item.display.forEach((point, index) => {
       const x = xScale(point.time, domain, box);
       const y = yScale(point.value, domain, box);
-      if (index === 0) ctx.moveTo(x, y);
+      if (index === 0 || shouldBreakLine(previous, point)) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
+      previous = point;
     });
     ctx.stroke();
   });
+}
+
+function shouldBreakLine(previous, point) {
+  if (!previous || !state.interval.endsWith("m")) return false;
+  const intervalSeconds = Number.parseInt(state.interval, 10) * 60;
+  if (!Number.isFinite(intervalSeconds)) return false;
+  return point.time - previous.time > intervalSeconds * 4;
 }
 
 function drawHover(domain, box) {
