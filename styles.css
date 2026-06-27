@@ -100,7 +100,7 @@ button {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: #eef8f2;
+  color: #c5b783;
   font-size: 14px;
   font-weight: 800;
 }
@@ -110,21 +110,22 @@ button {
   isolation: isolate;
   overflow: visible;
   background:
-    radial-gradient(circle at 68% 30%, rgba(238, 248, 242, 0.18), transparent 0 13%, rgba(136, 173, 157, 0.24) 21%, transparent 45%),
-    radial-gradient(circle at 28% 72%, #142d26 0%, #1d4438 38%, #091814 72%),
-    linear-gradient(135deg, #88ad9d, #315f4f 56%, #071410);
-  border: 1px solid rgba(136, 173, 157, 0.36);
+    radial-gradient(circle at 70% 28%, rgba(197, 183, 131, 0.11), transparent 0 15%, rgba(136, 173, 157, 0.12) 25%, transparent 48%),
+    radial-gradient(circle at 28% 72%, #122720 0%, #17382e 42%, #071410 74%),
+    linear-gradient(135deg, #708d80, #254b3f 58%, #06120f);
+  border: 1px solid rgba(197, 183, 131, 0.2);
   box-shadow:
     inset -8px -8px 16px rgba(0, 0, 0, 0.34),
-    inset 6px 5px 12px rgba(154, 235, 200, 0.15),
-    0 0 22px rgba(49, 95, 79, 0.34);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 19px;
+    inset 5px 5px 10px rgba(197, 183, 131, 0.08),
+    0 0 18px rgba(49, 95, 79, 0.22);
+  font-family: "Didot", "Bodoni 72", "Times New Roman", serif;
+  font-size: 20px;
   font-style: italic;
-  font-weight: 700;
+  font-weight: 500;
+  line-height: 1;
   text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.14),
-    0 0 10px rgba(234, 255, 246, 0.24);
+    0 0 1px rgba(255, 246, 205, 0.32),
+    0 0 8px rgba(197, 183, 131, 0.16);
 }
 
 .brand-mark::before {
@@ -134,8 +135,8 @@ button {
   z-index: -1;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 72% 32%, rgba(136, 173, 157, 0.14), transparent 0 25%),
-    conic-gradient(from 210deg, transparent 0deg, rgba(49, 95, 79, 0.1) 44deg, transparent 98deg, rgba(136, 173, 157, 0.1) 142deg, transparent 214deg);
+    radial-gradient(circle at 72% 32%, rgba(197, 183, 131, 0.08), transparent 0 24%),
+    conic-gradient(from 210deg, transparent 0deg, rgba(49, 95, 79, 0.08) 44deg, transparent 98deg, rgba(197, 183, 131, 0.07) 142deg, transparent 214deg);
   filter: blur(6px);
 }
 
@@ -146,8 +147,8 @@ button {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(234, 255, 246, 0.22);
-  filter: blur(2px);
+  background: rgba(197, 183, 131, 0.12);
+  filter: blur(3px);
 }
 
 .avatar {
@@ -227,7 +228,8 @@ button {
 .toolbar {
   min-height: 116px;
   display: grid;
-  grid-template-columns: minmax(190px, 260px) minmax(420px, 1fr);
+  grid-template-columns: minmax(420px, 720px);
+  justify-content: end;
   gap: 12px;
   align-items: center;
   padding: 12px;
@@ -843,7 +845,7 @@ h1 {
   }
 
   .toolbar {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(420px, 640px);
     align-items: stretch;
   }
 

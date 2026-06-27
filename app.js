@@ -352,7 +352,7 @@ function showError(message) {
   els.empty.textContent = message;
   els.empty.classList.remove("hidden");
   renderLists();
-  renderSnapshot();
+  renderHoverDate();
   renderFeaturePanels();
 }
 
